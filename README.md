@@ -62,6 +62,8 @@
 ├── TenantTypes.h              # Memory structures, SIMD primitives, lock-free buffers
 ├── main.cpp                   # C-ABI export bindings and SA-MP plugin entry points
 ├── Makefile                   # Cross-platform 32-bit (i686) toolchain configuration
+└── tenant_virtualizer.inc     # Production PAWN include interface
+```
 
 ## 💻 Toolchain Requirements
 
