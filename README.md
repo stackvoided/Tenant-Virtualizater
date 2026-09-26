@@ -50,19 +50,19 @@
 ## Codebase Structure 🗂
 
 ```text
-├── AmxHooks.cpp              # Low-level AMX runtime callback interception
-├── JitHooks.cpp              # VirtualMemory protection & x86 detour engine
-├── JitHooks.h                # Detour engine definitions and executable flags
-├── MemoryPool.h               # Slab/Arena allocator with page-aligned execution bounds
-├── NetworkRouter.cpp          # Lock-free atomic ring buffer network router
-├── Profiler.h                 # High-resolution nanosecond execution scope profiler
-├── SkeletalRaycast.cpp        # AVX2/SIMD spatial vector mathematics and raycasting
-├── TenantManager.cpp          # Lifecycle orchestrator for virtual tenant states
-├── TenantManager.h            # Tenant state containers and thread-safe registries
-├── TenantTypes.h              # Memory structures, SIMD primitives, lock-free buffers
-├── main.cpp                   # C-ABI export bindings and SA-MP plugin entry points
-├── Makefile                   # Cross-platform 32-bit (i686) toolchain configuration
-└── tenant_virtualizer.inc     # Production PAWN include interface
+├── AmxHooks.cpp              
+├── JitHooks.cpp           
+├── JitHooks.h   
+├── MemoryPool.h           
+├── NetworkRouter.cpp
+├── Profiler.h           
+├── SkeletalRaycast.cpp   
+├── TenantManager.cpp   
+├── TenantManager.h   
+├── TenantTypes.h     
+├── main.cpp
+├── Makefile    
+└── tenant_virtualizer.inc
 ```
 
 ## 💻 Toolchain Requirements
@@ -143,7 +143,6 @@ static g_PaintballTenant = -1;
 
 public OnGameModeInit()
 {
-    // Instantiate an isolated runtime context with memory isolation and real-time profiling
     g_PaintballTenant = Tenant_CreateInstance(
         "scriptfiles/tenants/paintball_logic.amx",
         TENANT_FLAG_ISOLATE_MEMORY | TENANT_FLAG_PROFILING_ENABLED
@@ -159,7 +158,6 @@ public OnGameModeInit()
 
 public OnGameModeExit()
 {
-    // Graceful teardown and memory release
     if (g_PaintballTenant != -1)
     {
         Tenant_DestroyInstance(g_PaintballTenant);
@@ -175,7 +173,6 @@ public OnPlayerCommandText(playerid, cmdtext[])
         if (g_PaintballTenant == -1)
             return SendClientMessage(playerid, -1, "Tenant instance offline.");
 
-        // Bind network routing and execution context to the tenant space
         Tenant_Bind(playerid, g_PaintballTenant);
         SetPlayerVirtualWorld(playerid, 101);
         SendClientMessage(playerid, -1, "Routed to Paintball Sandbox Environment.");
@@ -185,7 +182,6 @@ public OnPlayerCommandText(playerid, cmdtext[])
 
     if (!strcmp(cmdtext, "/leavepaintball", true))
     {
-        // Unbind player context and route back to global execution space
         Tenant_Unbind(playerid);
         SetPlayerVirtualWorld(playerid, 0);
         SendClientMessage(playerid, -1, "Routed back to Global Master Sandbox.");
